@@ -1,9 +1,10 @@
 var Engine = new (require("./Engine_One.js"))();
 
 //todo loop though level object
-Engine.assetManager.loadAsset({ name: "textureTest", type: "texture", args: { fileName: ".X/Xtexture.jpg" } })
+Engine.assetManager.loadAsset({ name: "textureTest", type: "texture", args: { fileName: "./Assets/X/XTexture.jpg" } })
 Engine.assetManager.loadAsset({ name: "myBox", type: "geo", args: { shape: "cube", size: [1, 1, 1] } })
 Engine.assetManager.loadAsset({ name: "blue", type: "mat", args: { shader: "basic", color: 0x00000ff } })
+Engine.assetManager.loadAsset({ name: "BasicX", type: "mat", args: { shader: "basic", map: "textureTest" } })
 
 //after load
 Engine.assetManager.completePending().then(function (e) {
@@ -12,7 +13,7 @@ Engine.assetManager.completePending().then(function (e) {
 
 
     var geometry = Engine.assets.myBox.render;
-    var material = Engine.assets.blue.render;
+    var material = Engine.assets.BasicX.render;
 
     var cube = new THREE.Mesh(geometry, material);
 

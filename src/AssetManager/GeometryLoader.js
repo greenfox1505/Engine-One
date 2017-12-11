@@ -1,13 +1,13 @@
-require("../main.js")
-
-module.exports = function (engine) {
+/**
+ * 
+ * @param {AssetManager} AssetManager
+ */
+module.exports = function (AssetManager) {
+    var engine = AssetManager.engine;
     return function (args) {
         return new Promise((res, rej) => {
             var error = ""
-
             var THREE = engine.libs.THREE;
-            args; engine;
-            console.log("into the rabbit hole we are")
 
             if (args.shape == "cube") {
                 var geo = {

@@ -5,8 +5,9 @@
  * @param {AssetManager} myAssetManager 
  */
 function defaultLoaders(myAssetManager) {//these should probably should be another class...
-	myAssetManager.newAssetLoader("geo", require("./GeoAssetLoader.js")(myAssetManager.engine));
-	myAssetManager.newAssetLoader("mat", require("./MatAssetLoader.js")(myAssetManager.engine));
+	myAssetManager.newAssetLoader("geo", require("./GeometryLoader.js")(myAssetManager));
+	myAssetManager.newAssetLoader("mat", require("./MaterialLoader.js")(myAssetManager));
+	myAssetManager.newAssetLoader("texture", require("./TextureLoader.js")(myAssetManager));
 }
 
 class AssetManager {//maybe there is an asset manager concept that doesn't need to check asset type. it just loads all the types that match this asset... this isn't that
