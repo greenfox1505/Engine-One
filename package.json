@@ -1,0 +1,24 @@
+{
+  "name": "engine_one",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "$(npm bin)/watchify src/main.js -o \"tee bin.js | $(npm bin)/uglifyjs > bin.min.js\" -v --debug --standalone GameEngine",
+    "build": "$(npm bin)/browserify src/main.js -v --standalone GameEngine | tee bin.js | $(npm bin)/uglifyjs > bin.min.js",
+    "pullRemote": "git push; ssh hermes.zombiejerky.net \"cd ~/Projects/levelLoaderTest; git pull\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "stats.js": "^0.17.0",
+    "three": "^0.87.1"
+  },
+  "devDependencies": {
+    "uglify-js": "^3.1.5",
+    "watchify": "^3.9.0"
+  }
+}
+
