@@ -4,7 +4,7 @@
  * 
  * @param {AssetManager} myAssetManager 
  */
-function defaultLoaders(myAssetManager) {//these should probably should be another class...
+function defaultAssetLoaders(myAssetManager) {//these should probably should be another class...
 	myAssetManager.newAssetLoader("geo", require("./GeometryLoader.js")(myAssetManager));
 	myAssetManager.newAssetLoader("mat", require("./MaterialLoader.js")(myAssetManager));
 	myAssetManager.newAssetLoader("texture", require("./TextureLoader.js")(myAssetManager));
@@ -15,7 +15,7 @@ class AssetManager {//maybe there is an asset manager concept that doesn't need 
 		this.engine = engine;
 		this.assets = {};
 		this.loaders = {};
-		defaultLoaders(this);
+		defaultAssetLoaders(this);
 	}
 
     /**
@@ -47,13 +47,17 @@ class AssetManager {//maybe there is an asset manager concept that doesn't need 
 	loadAsset(asset) {
 		var that = this
 		if (Array.isArray(asset)) {
-			throw "Array not ready";
+			throw "Array Object Loading not ready";
 		}
-		this.assets[asset.name] = this.loaders[asset.type](asset.args);
-		this.assets[asset.name].then(function (loadedAsset) {
-			that.assets[asset.name] = loadedAsset;
+		var name = asset.name;
+		var type = asset.type;
+		var args = asset.args;
+
+		this.assets[name] = this.loaders[type](args);
+		this.assets[name].then(function (loadedAsset) {
+			that.assets[name] = loadedAsset;
 		})
-		return this.assets[asset.name];
+		return this.assets[name];
 	}
 
     /**

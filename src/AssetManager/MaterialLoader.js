@@ -31,6 +31,12 @@ module.exports = function (AssetManager) {
                     }
                     res(mat);
                 }
+                if (args.shader == "normal") {
+                    var mat = {
+                        render: new THREE.MeshNormalMaterial(args)
+                    }
+                    res(mat);
+                }
                 else { error = { msg: "INVALID args.shader", data: args } }
                 if (error != "") {
                     rej(error)

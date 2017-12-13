@@ -4,21 +4,22 @@ var Engine = new (require("./Engine_One.js"))();
 Engine.assetManager.loadAsset({ name: "textureTest", type: "texture", args: { fileName: "./Assets/X/XTexture.jpg" } })
 Engine.assetManager.loadAsset({ name: "myBox", type: "geo", args: { shape: "cube", size: [1, 1, 1] } })
 Engine.assetManager.loadAsset({ name: "blue", type: "mat", args: { shader: "basic", color: 0x00000ff } })
+Engine.assetManager.loadAsset({ name: "normal", type: "mat", args: { shader: "normal"} })
 Engine.assetManager.loadAsset({ name: "BasicX", type: "mat", args: { shader: "basic", map: "textureTest" } })
 
+
+Engine.objectManager.loadObject({name:"floatingBox",type:"basicMesh",args:{geo:"myBox",mat:"BasicX"}})
+
 //after load
-Engine.assetManager.completePending().then(function (e) {
+Engine.completePending().then(function (e) {
     var THREE = Engine.libs.THREE;
 
+    var cube = Engine.objectManager.objects.floatingBox;
 
-
-    var geometry = Engine.assets.myBox.render;
-    var material = Engine.assets.BasicX.render;
-
-    var cube = new THREE.Mesh(geometry, material);
-
-
-    Engine.scene.add(cube);
+    (new THREE.OBJLoader()).load("./Assets/monkey.obj",function(obj){
+        Engine.scene.add(obj);
+        obj.children[0].material = Engine.assets.normal.render;
+   })
 
     Engine.camera.position.z = 5;
 
