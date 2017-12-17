@@ -1,12 +1,13 @@
 var maps = ["map", "normalMap"];
+
 /**
  * 
- * @param {AssetManager} AssetManager
+ * @param {Engine_One} engine 
  */
-module.exports = function (AssetManager) {
-    var engine = AssetManager.engine;
+module.exports = function (engine) {
     return function (args) {
         return new Promise((res, rej) => {
+            var AssetManager = engine.assetManager;
             //TODO: this loader could referance a texture. that promise needs to be resolved before continuing this loader.
             var error = ""
             var THREE = engine.libs.THREE;
@@ -24,14 +25,13 @@ module.exports = function (AssetManager) {
 
             }
             Promise.all(dependancies).then(function (e) {
-
                 if (args.shader == "basic") {
                     var mat = {
                         render: new THREE.MeshBasicMaterial(args)
                     }
                     res(mat);
                 }
-                if (args.shader == "normal") {
+                else if (args.shader == "normal") {
                     var mat = {
                         render: new THREE.MeshNormalMaterial(args)
                     }
@@ -39,6 +39,7 @@ module.exports = function (AssetManager) {
                 }
                 else { error = { msg: "INVALID args.shader", data: args } }
                 if (error != "") {
+                    debugger
                     rej(error)
                     throw error;
                 }

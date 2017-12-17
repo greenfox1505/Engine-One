@@ -1,10 +1,9 @@
 /**
  * 
- * @param {AssetManager} AssetManager
+ * @param {Engine_One} engine
  */
-module.exports = function (AssetManager) {
-    var engine = AssetManager.engine;
-    return function (args) {//this does not provide an oputuinty for utilizing JSDocs...
+module.exports = function (engine) {
+    return function (args) {//this does not provide an oputuinty for utilizing JSDocs... //later:fuck jsdocs
         return new Promise((res, rej) => {
             args; engine;
             var THREE = engine.libs.THREE;
@@ -24,13 +23,12 @@ module.exports = function (AssetManager) {
                     //idk what to do here... we need some sort of loader progress bar at some point...
                 },
                 function (e) {//error callback
-                    debugger;
                     rej({
                         msg: "Texture Loader Failed",
                         error: e
                     })
-                },
-            )
+                }
+            );
         });
     }
 

@@ -1,9 +1,4 @@
-/**
- * 
- * @param {AssetManager} AssetManager
- */
-module.exports = function (AssetManager) {
-    var engine = AssetManager.engine;
+module.exports = function (engine) {
     return function (args) {
         return new Promise((res, rej) => {
             var error = ""
