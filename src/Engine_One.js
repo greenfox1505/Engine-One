@@ -4,12 +4,10 @@ var CANNON = require("cannon")
 var AsyncManager = require("./AsyncManager.js")
 var yaml = require("js-yaml")
 
-/**
- * 
- */
+
 class Engine_One {
     constructor() {
-        this.libs = { THREE: THREE, CANNON: CANNON };
+        this.libs = { THREE: THREE, CANNON: CANNON, yaml:yaml };
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer();
@@ -44,7 +42,7 @@ function LoadContent(contentName, type) {//TODO: raw content string parsing alon
     return new Promise((res, rej) => {//TODO: this will force load by extention, maybe allow for override?
         if (/.*\.yaml/.test(contentName) | type == "yaml") {
             that.assetManager.loaders.text(contentName).then((e) => {
-                var output = yaml.safeLoad(e);
+                var output = yaml.load(e);
                 if (output.type == "level") {
                     res(that.loadBundle(output));
                 }
@@ -68,7 +66,6 @@ function LoadBundle(bundleData) {
         var name = i[0];
         //todo, if type is bundle, load bundle
         var type = i[1];
-
         this.assetManager.load({name:name,type:type,args:args})
 
     }
@@ -77,7 +74,6 @@ function LoadBundle(bundleData) {
         i = i.split(" ");
         var name = i[0];
         var type = i[1];
-
         this.objectManager.load({name:name,type:type,args:args})
 
     }
@@ -86,7 +82,7 @@ function LoadBundle(bundleData) {
     return new Promise((res, rej) => {
         debugger;
         that.completeAll().then(function(e){
-            res(e);
+            res(bundleData);
         }).catch(rej);
     })
 }
