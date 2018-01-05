@@ -1,0 +1,29 @@
+---
+type: level
+assets:
+  textureTest texture:
+    fileName: "./Assets/X/XTexture.jpg"
+  myBox geo:
+    shape: cube
+    size: [1,1,1]
+  blue mat:
+    shader: basic
+    color: 0x0000ff
+  normal mat:
+    shader: normal
+  BasicX mat:
+    shader: basic
+    map: textureTest
+objects:
+  floatingBox basicMesh:
+    geo: myBox
+    mat: normal
+    pos: [0,0,0]
+  floatingBox2 basicMesh:
+    geo: myBox
+    mat: blue
+    pos: [0,1,0]
+  floatingBox1 basicMesh:
+    geo: myBox
+    mat: BasicX
+    pos: [0,-1,0]

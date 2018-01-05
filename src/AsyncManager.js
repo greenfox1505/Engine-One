@@ -6,6 +6,7 @@ class AsyncManager {
     constructor(defaultLoaders) {
         this.elements = {};
         this.loaders = {};
+        this.raw = [];
         for (var i in defaultLoaders) {
             this.newLoader(i, defaultLoaders[i]);
         }
@@ -19,6 +20,10 @@ class AsyncManager {
      * @returns {Promise} 
      */
     load(element) {
+        if(this.elements[element.name]){
+            throw "This element already exists!: \"" + element.name + "\"";
+        }
+        this.raw.push(element);
         var name = element.name;
         var type = element.type;
         var args = element.args
@@ -64,7 +69,6 @@ class AsyncManager {
                 }
                 res(ObjectStruct)
             })
-
         }))
         return Promise.all(temp)
     }
@@ -78,40 +82,6 @@ class AsyncManager {
         this.loaders[name] = callback;
     }
 }
-
-// var a = new AsyncManager({
-//     text: function (args) {
-//         return new Promise((res, rej) => {
-//             var client = new XMLHttpRequest();
-//             client.open('GET', args);
-//             client.onload = function (e) {
-//                 res(e.target.responseText);
-//             }
-//             client.onerror = function (e) {
-//                 rej(e);
-//             }
-//             client.send();
-
-//         })
-//     },
-//     json: function (args) {
-//         return new Promise((res, rej) => {
-//             a.loaders.text(args).then(function (e) {
-//                 res(JSON.parse(e))
-//             });
-//         })
-//     }
-// });
-
-// a.load({ name: "helloWorld", type: "text", args: "./package.json" }).then(function (e) {
-//     console.log(e)
-// })
-// a.load({ name: "testTwo", type: "json", args: "./package.json" }).then((e)=>{
-//     console.log(e);
-//     debugger;    
-// });
-
-// a.completeAll().then((e) => console.log(e))
 
 
 module.exports = AsyncManager;
